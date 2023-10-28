@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "todo-project"
+name = "todo"
 version = "0.1.0"
 description = ""
 authors = ["Justus Jake <Justusjake3@gmail.com>"]
@@ -17,3 +17,11 @@ sqlalchemy = "^2.0.22"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[ellar]
+default = "todo"
+[ellar.projects.todo]
+project-name = "todo"
+application = "todo.server:application"
+config = "todo.config:DevelopmentConfig"
+root-module = "todo.root_module:ApplicationModule"

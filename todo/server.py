@@ -8,7 +8,7 @@ from .root_module import ApplicationModule
 application = AppFactory.create_from_app_module(
     ApplicationModule,
     config_module=os.environ.get(
-        ELLAR_CONFIG_MODULE, "todo_project.config:DevelopmentConfig"
+        ELLAR_CONFIG_MODULE, "todo.config:DevelopmentConfig"
     ),
     #global_guards=[]
 )
@@ -16,7 +16,7 @@ application = AppFactory.create_from_app_module(
 #uncomment this section if you want API documentation
 
 document_builder = OpenAPIDocumentBuilder()
-document_builder.set_title('Todo_project API') \
+document_builder.set_title('todo API') \
     .set_version('1.0.2') \
     .set_contact(name='Author Name', url='https://www.author-name.com', email='authorname@gmail.com') \
     .set_license('MIT Licence', url='https://www.google.com')

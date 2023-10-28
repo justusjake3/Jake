@@ -15,7 +15,7 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    todo = relationship("Todo", back_populates="users")
+    todo = relationship("Todo", backref="users")
 
 class Todo(Base):
     __tablename__ = "todo"
@@ -27,4 +27,4 @@ class Todo(Base):
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
-    users = relationship("User", back_populates="todo")
+    #users = relationship("User", backref="todo")

@@ -13,10 +13,11 @@ class TestTodoController:
         detail = {
             "title": "morning workout",
             "description": "This included aerobic and strengthening exercises",
-            "status": "Done",
+            "status_completed": "False",
+            "user_id": "users.id",
         }
         response = self.client.post("/todo/create", json=detail)
-        assert response.status_code == 201
+        assert response.status_code ==
         data = response.json()
         assert data == detail
 

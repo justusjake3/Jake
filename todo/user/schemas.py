@@ -1,4 +1,3 @@
-
 from ellar.common import Serializer
 from datetime import datetime
 from pydantic import Field
