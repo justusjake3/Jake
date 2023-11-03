@@ -1,11 +1,13 @@
 from ..todo.models import User
-from ..todo.database import SessionLocal
+from ..todo.database import get_session_maker
 from typing import List
+from ellar.di import injectable, singleton_scope
+#from ellar.common import HTTPException
 
-
+@injectable(scope=singleton_scope)
 class UserServices:
     def __init__(self) -> None:
-        self.database = SessionLocal()
+        self.database = get_session_maker()
 
     def create_user(self, user_data) -> User:
         user = User(

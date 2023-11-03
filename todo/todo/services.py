@@ -1,13 +1,13 @@
 from typing import List, Union
 from ellar.di import injectable, singleton_scope
 from .models import Todo
-from ..todo.database import SessionLocal
+from ..todo.database import get_session_maker
 
 
 @injectable(scope=singleton_scope)
 class TodoServices:
     def __init__(self) -> None:
-        self.database = SessionLocal()
+        self.database = get_session_maker()
 
     def add_todo(self, todo_data: dict) -> Todo:
         new_todo = Todo(
@@ -29,7 +29,7 @@ class TodoServices:
         todo = self.database.query(Todo).filter(Todo.user_id == user_id, Todo.status_completed == status_completed).all()
         return todo
 
-    def update(self,user_id: int, todo_id: int, update_data: dict) -> Union[Todo, None]:
+    def update(self, user_id: int, todo_id: int, update_data: dict) -> Union[Todo, None]:
         todo = self.database.query(Todo).filter(Todo.user_id == user_id, Todo.id == todo_id)
         todo.update(update_data)
         self.database.commit()

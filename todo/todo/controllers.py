@@ -4,9 +4,9 @@ from ellar.common import Controller, ControllerBase, get, put, delete, post
 from ellar.common.exceptions import NotFound
 from .schemas import TodoSerializer
 from .services import TodoServices
-from ..todo.database import engine
+#from ..todo.database import engine
 from ..todo.models import Base, Todo
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 
 @Controller
@@ -26,18 +26,18 @@ class TodoController(ControllerBase):
             raise NotFound("user not found")
         return todo
 
-    @get("/status", response={200: t.List[TodoSerializer]})
+    @get("/status/{user_id: str}", response={200: t.List[TodoSerializer]})
     async def list_status(self, user_id: int, status_completed: bool) -> List[TodoSerializer]:
         return self.todo_service.list_completed(user_id, status_completed)
 
-    @delete("/user_todo_id", response={204: dict})
-    async def delete(self, user_id: str, todo_id: str)  -> Union[dict, None]:
+    @delete("/{user_id: str}", response={204: dict})
+    async def delete(self, user_id: int, todo_id: int) -> t.Optional[int]:
         todo = self.todo_service.remove(user_id, todo_id)
         if not todo:
             raise NotFound("User's todo not found")
         return 204, {}
 
-    @get("/all", response={200: t.List[TodoSerializer]})
+    @get("/all/{user_id: str}", response={200: t.List[TodoSerializer]})
     async def list(self, user_id: int) -> List[TodoSerializer]:
         return self.todo_service.list(user_id)
 

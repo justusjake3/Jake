@@ -7,10 +7,12 @@ export ELLAR_CONFIG_MODULE=todo_project.config:DevelopmentConfig
 """
 
 import typing as t
-import os
+import os.path
 from pathlib import Path
 
 from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type
+from pydantic.networks import PostgresDsn
+from starlette.config import environ
 from starlette.middleware import Middleware
 from ellar.common import IExceptionHandler, JSONResponse
 from ellar.core import ConfigDefaultTypesMixin
@@ -69,9 +71,11 @@ class BaseConfig(ConfigDefaultTypesMixin):
         t.Any, t.Callable[[t.Any], t.Any]
     ] = encoders_by_type
 
+    SQLALCHEMY_URL = "postgresql://postgres:1234@localhost/todo"
 
 class DevelopmentConfig(BaseConfig):
     DEBUG: bool = True
 
 class TestConfig(BaseConfig):
     DEBUG = bool = False
+    SQLALCHEMY_URL = "postgresql://postgres:1234@localhost/test_db"
