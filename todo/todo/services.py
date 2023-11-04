@@ -1,7 +1,7 @@
 from typing import List, Union
 from ellar.di import injectable, singleton_scope
-from .models import Todo
-from ..todo.database import get_session_maker
+from todo.db.models import Todo
+from todo.db.database import get_session_maker
 
 
 @injectable(scope=singleton_scope)

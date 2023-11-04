@@ -1,11 +1,11 @@
 import typing as t
-from typing import Optional, List, Union
+from typing import Optional, List
 from ellar.common import Controller, ControllerBase, get, put, delete, post
 from ellar.common.exceptions import NotFound
 from .schemas import TodoSerializer
 from .services import TodoServices
 #from ..todo.database import engine
-from ..todo.models import Base, Todo
+from todo.db.models import Todo
 #Base.metadata.create_all(bind=engine)
 
 

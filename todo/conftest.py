@@ -1,21 +1,18 @@
 import asyncio
 import os
-from pathlib import Path
 
-import alembic.config
-from alembic.config import Config
 from alembic.command import upgrade, downgrade
 import pytest
+from alembic.config import Config
 from ellar.common.constants import ELLAR_CONFIG_MODULE
 from ellar.core import App
 from ellar.testing import Test
 from ellar.testing.module import TestingModule
 from httpx import AsyncClient
-from sqlalchemy import text, create_engine
-from sqlalchemy.ext.asyncio import AsyncEngine
+from sqlalchemy import create_engine
 
-from .todo.models import Base, User
-from .todo.database import get_session_maker
+from .db.models import Base, User
+from .db.database import get_session_maker
 from .root_module import ApplicationModule
 
 os.environ.setdefault(ELLAR_CONFIG_MODULE, "todo.config:TestConfig")
@@ -73,23 +70,21 @@ def event_loop():
 def migration_config() -> Config:
     config = Config()
 
-
-    config.set_main_option(name: 'script_location', os.path.join(str(Path(__file__).parent), 'migration'))
-
+    config.set_main_option('script_location', 'db/alembic')
 
     return config
 
 
 @pytest.fixture(scope="session")
-def db(app, migration_config ):
-    engine = create_engine(app.config.SQLALCHEMY_URL, connect_args={"check_same_thread": False})
+def db(app, migration_config):
+    engine = create_engine(app.config.SQLALCHEMY_URL)
 
     try:
         Base.metadata.drop_all(bind=engine)
         upgrade(migration_config, revision='head')
 
         yield
-    except Exception:
+    except Exception as e:
         pass
 
         Base.metadata.drop_all(bind=engine)

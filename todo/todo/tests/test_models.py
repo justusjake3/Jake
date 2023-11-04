@@ -1,4 +1,4 @@
-from ..models import Todo, User
+from todo.db.models import Todo, User
 
 def test_todo_model(db):
     todo = Todo(title="morning workout", description="This included aerobic and strengthening exercises", status_completed="true", user_id=1)
