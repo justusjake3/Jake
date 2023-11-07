@@ -7,12 +7,9 @@ export ELLAR_CONFIG_MODULE=todo_project.config:DevelopmentConfig
 """
 
 import typing as t
-import os.path
 from pathlib import Path
 
 from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type
-from pydantic.networks import PostgresDsn
-from starlette.config import environ
 from starlette.middleware import Middleware
 from ellar.common import IExceptionHandler, JSONResponse
 from ellar.core import ConfigDefaultTypesMixin

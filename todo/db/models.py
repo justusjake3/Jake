@@ -18,7 +18,7 @@ class User(Base):
     todo = relationship("Todo", backref="users")
 
 class Todo(Base):
-    __tablename__ = "todo"
+    __tablename__ = "routine"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
@@ -27,4 +27,4 @@ class Todo(Base):
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
-    #users = relationship("User", backref="todo")
+    #users = relationship("User", backref="routine")

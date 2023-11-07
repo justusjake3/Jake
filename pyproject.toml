@@ -12,6 +12,7 @@ pytest = "^7.4.2"
 ellar = "^0.5.1"
 ellar-cli = "^0.2.2"
 sqlalchemy = "^2.0.22"
+psycopg2 = "^2.9.9"
 
 
 [build-system]

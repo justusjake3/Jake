@@ -4,7 +4,7 @@ from ellar.common import Controller, ControllerBase, get, put, delete, post
 from ellar.common.exceptions import NotFound
 from .schemas import TodoSerializer
 from .services import TodoServices
-#from ..todo.database import engine
+#from ..routine.database import engine
 from todo.db.models import Todo
 #Base.metadata.create_all(bind=engine)
 
@@ -34,7 +34,7 @@ class TodoController(ControllerBase):
     async def delete(self, user_id: int, todo_id: int) -> t.Optional[int]:
         todo = self.todo_service.remove(user_id, todo_id)
         if not todo:
-            raise NotFound("User's todo not found")
+            raise NotFound("User's routine not found")
         return 204, {}
 
     @get("/all/{user_id: str}", response={200: t.List[TodoSerializer]})

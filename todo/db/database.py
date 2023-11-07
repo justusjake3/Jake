@@ -8,8 +8,6 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-#SQLALCHEMY_DATABASE_URL = "postgresql://postgres:1234@localhost/todo"
-
 @cache
 def get_engine():
     config = Config(config_module=os.environ.get(ELLAR_CONFIG_MODULE, "todo.config:DevelopmentConfig"))

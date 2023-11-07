@@ -19,11 +19,11 @@ class UserController(ControllerBase):
     async def list_users(self) -> t.Dict:
         return self.user_service.get_all_users()
 
-    @get("/{user_id: str}", response={200: UserSerializer})
+    @get("/{user_id: int}", response={200: UserSerializer})
     async def get_user_by_id(self, user_id: int) -> t.Optional[dict]:
         user = self.user_service.get_user_by_id(user_id)
         if not user:
-            raise NotFound("User's todo not found")
+            raise NotFound("User's routine not found")
         return user
 
 

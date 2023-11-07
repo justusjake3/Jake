@@ -6,7 +6,7 @@ from ellar.core import Config
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from todo.db.alembic import context
+from alembic import context
 
 ellar_config = Config(config_module=os.environ.get(ELLAR_CONFIG_MODULE, "todo.config:DevelopmentConfig"))
 

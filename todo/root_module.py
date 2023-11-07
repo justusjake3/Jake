@@ -1,8 +1,8 @@
 from ellar.common import Module, exception_handler, JSONResponse, Response, IApplicationStartup, IExecutionContext
 from ellar.core import ModuleBase
 from ellar.samples.modules import HomeModule
-from .todo.module import TodoModule
-from .user.module import UserModule
+from todo.routine.module import TodoModule
+from todo.user.module import UserModule
 
 
 @Module(modules=[HomeModule, TodoModule, UserModule])

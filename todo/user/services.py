@@ -2,7 +2,6 @@ from todo.db.models import User
 from todo.db.database import get_session_maker
 from typing import List
 from ellar.di import injectable, singleton_scope
-#from ellar.common import HTTPException
 
 @injectable(scope=singleton_scope)
 class UserServices:

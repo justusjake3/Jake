@@ -1,9 +1,7 @@
 from ellar.di import ProviderConfig
-
 from todo.user.controllers import UserController
 from ..services import UserServices
 from ellar.testing import Test, TestClient
-
 
 
 class TestUserController:
@@ -19,7 +17,7 @@ class TestUserController:
             "is_active": True,
         }
         response = self.client.post("/user/add", json=data)
-        assert response.status_code == 200
+        assert response.status_code == 201
         detail = response.json()
         assert detail["id"]
         assert detail["created_date"]
