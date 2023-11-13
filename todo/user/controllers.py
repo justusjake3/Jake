@@ -16,10 +16,10 @@ class UserController(ControllerBase):
         return user
 
     @get("/", response={200: t.List[UserSerializer]})
-    async def list_users(self) -> t.Dict:
+    async def list_users(self) -> t.List[t.Dict]:
         return self.user_service.get_all_users()
 
-    @get("/{user_id: int}", response={200: UserSerializer})
+    @get("/{user_id}", response={200: UserSerializer})
     async def get_user_by_id(self, user_id: int) -> t.Optional[dict]:
         user = self.user_service.get_user_by_id(user_id)
         if not user:

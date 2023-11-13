@@ -11,7 +11,7 @@ from ellar.testing.module import TestingModule
 from httpx import AsyncClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from .db.models import Base, User
+from .db.models import Base, User, Todo
 from .root_module import ApplicationModule
 
 os.environ.setdefault(ELLAR_CONFIG_MODULE, "todo.config:TestConfig")
@@ -48,7 +48,7 @@ def migration_config() -> Config:
     return config
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 def db_engine(app, migration_config):
     engine = create_engine(app.config.SQLALCHEMY_URL)
     Base.metadata.create_all(bind=engine)
@@ -59,7 +59,7 @@ def db_engine(app, migration_config):
     Base.metadata.drop_all(bind=engine)
     engine.dispose()
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 def db(app, db_engine):
     session = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
     session.begin()
@@ -67,8 +67,8 @@ def db(app, db_engine):
     session.close_all()
 
 
-@pytest.fixture(scope="session")
-def create_user(db):
+@pytest.fixture()
+def user(db):
     user = User(id=1,
                 email="Justusjake3@gmail.com",
                 name="Justusjake",
@@ -78,4 +78,19 @@ def create_user(db):
     db.add(user)
     db.commit()
     db.refresh(user)
-    yield user
+    return user
+
+
+@pytest.fixture()
+def routine(db, user):
+    routine = Todo(
+        id=1,
+        title="Test routine",
+        user_id=user.id,
+        description="A routine",
+        status_completed=True,
+    )
+    db.add(routine)
+    db.commit()
+    db.refresh(routine)
+    return routine
