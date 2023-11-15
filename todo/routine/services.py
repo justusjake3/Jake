@@ -29,7 +29,7 @@ class TodoServices:
         todo = self.database.query(Todo).filter(Todo.user_id == user_id, Todo.status_completed == status_completed).all()
         return todo
 
-    def update(self, user_id: int, todo_id: int, update_data: dict) -> Union[Todo, None]:
+    def update(self, user_id: int, todo_id: str, update_data: dict) -> Union[Todo, None]:
         todo = self.database.query(Todo).filter(Todo.user_id == user_id, Todo.id == todo_id)
         todo.update(update_data)
         self.database.commit()

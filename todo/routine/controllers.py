@@ -19,9 +19,10 @@ class TodoController(ControllerBase):
         todo = self.todo_service.add_todo(todo_data)
         return todo
 
-    @put("/{todo_id}", response={200: TodoSerializer})
-    async def update(self, todo_id: str, payload: TodoSerializer) -> Optional[TodoSerializer]:
-        todo = self.todo_service.update(todo_id, payload.dict())
+    @put("/{user_id}/{todo_id}", response={200: TodoSerializer})
+    async def update(self, todo_id: str, user_id: int, payload: TodoSerializer) -> Optional[TodoSerializer]:
+        update_data = payload.dict(exclude_unset=True)
+        todo = self.todo_service.update(todo_id, user_id, update_data)
         if not todo:
             raise NotFound("user not found")
         return TodoSerializer.from_orm(todo)
@@ -30,7 +31,7 @@ class TodoController(ControllerBase):
     async def list_status(self, user_id: int, status_completed: bool) -> List[TodoSerializer]:
         return self.todo_service.list_completed(user_id, status_completed)
 
-    @delete("/{user_id}", response={204: dict})
+    @delete("/{user_id}/{todo_id}", response={204: dict})
     async def delete(self, user_id: int, todo_id: int) -> t.Optional[int]:
         todo = self.todo_service.remove(user_id, todo_id)
         if not todo:

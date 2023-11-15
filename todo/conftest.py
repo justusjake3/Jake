@@ -82,7 +82,7 @@ def user(db):
 
 
 @pytest.fixture()
-def routine(db, user):
+def todo(db, user):
     routine = Todo(
         id=1,
         title="Test routine",
